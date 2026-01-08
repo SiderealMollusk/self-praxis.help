@@ -64,3 +64,27 @@ just deploy-vps-nginx
 *   **`nginx/`**: Contains the production Nginx configuration.
 *   **`.env`**: (GitIgnored) Contains sensitive IPs and paths.
 *   **`secrets.enc.env`**: Encrypted version of `.env`.
+
+## Runbook: Adding a New App
+
+1.  **Create the App Directory**
+    *   Create `apps/<kebab-name>/`
+    *   Add your `Dockerfile` and source code.
+    *   Add `apps/<kebab-name>/.env` (ensure it is gitignored).
+    *   Run `just save-secrets` in `ops/` to encrypt it.
+
+2.  **Register Backend (Docker)**
+    *   Edit `ops/docker-compose.yml`.
+    *   Copy an existing service definition.
+    *   **Crucial**: Assign a UNIQUE Host Port (e.g., `8003:80`).
+    *   Update the Service Name and Image Name tags.
+
+3.  **Register Frontend (Nginx)**
+    *   Edit `ops/nginx/prod-selfpraxis.conf`.
+    *   Add an `upstream` block pointing to the Nuc IP and your NEW Port.
+    *   Add a `location` block to route traffic (e.g., `/my-new-app/`).
+
+4.  **Deploy**
+    *   Commit your changes: `git commit -am "feat: add <kebab-name>"`
+    *   Update Nginx Routing: `just deploy-vps-nginx`
+    *   Deploy the App: `just deploy <kebab-name>`
