@@ -61,12 +61,27 @@ deploy app:
     just _push-app-config {{app}}
     just _build-and-deploy {{app}}
 
+# Deploy an App to Staging (Usage: just deploy-staging codenames)
+deploy-staging app:
+    @echo "Deploying {{app}} to STAGING..."
+    just _git-update
+    just _push-app-config {{app}}
+    just _build-and-deploy-staging {{app}}
+
 _push-app-config app:
     @echo "Pushing {{app}} config..."
     scp ../apps/{{app}}/.env {{nuc_host}}:{{nuc_root}}/apps/{{app}}/.env
 
 _git-update:
     ssh -t {{nuc_host}} "cd {{nuc_root}} && git pull"
+
+_build-and-deploy-staging app:
+    ssh -t {{nuc_host}} "cd {{nuc_root}} && \
+        SHA=\$(git rev-parse --short HEAD) && \
+        ./ops/scripts/prem/generate-site.sh {{app}} && \
+        cp ops/docker-compose.yml docker/ && \
+        docker build -t selfpraxis:{{app}}-staging-\$SHA apps/{{app}} && \
+        STAGING_IMAGE=selfpraxis:{{app}}-staging-\$SHA docker compose -f docker/docker-compose.yml up -d staging"
 
 _build-and-deploy app:
     ssh -t {{nuc_host}} "cd {{nuc_root}} && \
