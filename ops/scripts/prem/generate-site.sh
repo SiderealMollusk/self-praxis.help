@@ -5,7 +5,12 @@ set -e
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
 # Read Configuration
-CODENAME=$(cat "$REPO_ROOT/CODENAME")
+if [ -f "$REPO_ROOT/ops/.env" ]; then
+    set -a
+    source "$REPO_ROOT/ops/.env"
+    set +a
+fi
+
 GIT_SHA=$(git rev-parse --short HEAD)
 
 # Output Info
