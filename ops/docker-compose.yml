@@ -36,6 +36,17 @@ services:
     networks:
       - selfpraxis_net
 
+  # App: Homepage
+  # Port 8003 on Host -> 80 in Container
+  homepage:
+    image: selfpraxis:homepage-${HOMEPAGE_TAG}
+    container_name: selfpraxis-homepage
+    restart: always
+    ports:
+      - "8003:80"
+    networks:
+      - selfpraxis_net
+
   # Staging Slot (Shared)
   # Port 8009 on Host -> 80 in Container
   staging:
