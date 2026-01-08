@@ -81,7 +81,8 @@ app.post('/api/config', (req, res) => {
 });
 
 // Catch-all: Serve React App
-app.get('*', (req, res) => {
+// Catch-all: Serve React App (Must be last)
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
