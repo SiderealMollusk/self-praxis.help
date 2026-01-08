@@ -23,6 +23,17 @@ services:
     networks:
       - selfpraxis_net
 
+  # App: Shift Signups
+  # Port 8002 on Host -> 80 in Container
+  shift-signups:
+    image: selfpraxis:shift-signups-${SHIFT_SIGNUPS_TAG}
+    container_name: selfpraxis-shift-signups
+    restart: always
+    ports:
+      - "8002:80"
+    networks:
+      - selfpraxis_net
+
   # Staging Slot (Shared)
   # Port 8009 on Host -> 80 in Container
   staging:

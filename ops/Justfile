@@ -26,12 +26,14 @@ save-secrets:
     sops --encrypt ops/.env > ops/secrets.enc.env
     sops --encrypt apps/codenames/.env > apps/codenames/secrets.enc.env
     sops --encrypt apps/series-bible/.env > apps/series-bible/secrets.enc.env
+    sops --encrypt apps/shift-signups/.env > apps/shift-signups/secrets.enc.env
 
 # Decrypt ALL secrets.enc.env to local .env
 load-secrets:
     sops --decrypt ops/secrets.enc.env > ops/.env
     sops --decrypt apps/codenames/secrets.enc.env > apps/codenames/.env
     sops --decrypt apps/series-bible/secrets.enc.env > apps/series-bible/.env
+    sops --decrypt apps/shift-signups/secrets.enc.env > apps/shift-signups/.env
 
 # --- App Deployment Workflows ---
 
