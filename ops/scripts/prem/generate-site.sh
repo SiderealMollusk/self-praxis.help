@@ -2,7 +2,7 @@
 set -e
 
 # Path to the repository root
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+REPO_ROOT=$(git rev-parse --show-toplevel)
 
 # Read Configuration
 CODENAME=$(cat "$REPO_ROOT/CODENAME")

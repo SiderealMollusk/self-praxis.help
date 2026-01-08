@@ -11,6 +11,19 @@ if [ ! -f "$UPSTREAM_FILE" ]; then
     exit 1
 fi
 
+# Check if --raw flag is passed
+if [ "$1" == "--raw" ]; then
+    if grep -q "8000" "$UPSTREAM_FILE"; then
+        echo "blue"
+    elif grep -q "8002" "$UPSTREAM_FILE"; then
+        echo "green"
+    else
+        echo "unknown"
+        exit 1
+    fi
+    exit 0
+fi
+
 if grep -q "8000" "$UPSTREAM_FILE"; then
     echo "🔵 BLUE is ACTIVE (Port 8000)"
 elif grep -q "8002" "$UPSTREAM_FILE"; then
