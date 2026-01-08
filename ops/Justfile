@@ -1,0 +1,54 @@
+# Remote Hosts (Override these in .env)
+# default: assuming you have ssh config aliases set up
+set dotenv-load
+
+nuc_host := env_var_or_default("nuc_host", "nuc")
+vps_host := env_var_or_default("vps_host", "vps")
+
+# Project Paths on Remote
+nuc_root := "/srv/selfpraxis"
+vps_upstream_conf := "/etc/nginx/snippets/selfpraxis-prod-upstream.conf"
+
+set shell := ["bash", "-c"]
+
+# Default: List commands
+default:
+    @just --list --unsorted
+
+# --- Local Helpers ---
+
+# Check which color is currently active (run from laptop, queries VPS)
+check-active:
+    @echo "Checking active color on {{vps_host}}..."
+    # Pipe the script content to bash on the remote server
+    @ssh -t {{vps_host}} "bash -s" < ops/scripts/vps/check-active.sh
+
+# --- Remote Operations (Triggered from Laptop) ---
+
+# Deploy to Staging (Remote Control)
+deploy-staging:
+    @echo "Triggering Staging Deploy on {{nuc_host}}..."
+    # prem scripts are assumed to exist on the server because we git pull first
+    ssh -t {{nuc_host}} "cd {{nuc_root}}/staging && git pull && \
+        SHA=\$(git rev-parse --short HEAD) && \
+        ./ops/scripts/prem/generate-site.sh && \
+        docker build -t selfpraxis:staging-\$SHA . && \
+        docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d staging"
+
+# Deploy to Production (Remote Control)
+# Usage: just deploy-prod blue
+deploy-prod color:
+    @echo "Deploying to Production {{color}}..."
+    ssh -t {{nuc_host}} "cd {{nuc_root}}/prod && git pull && \
+        SHA=\$(git rev-parse --short HEAD) && \
+        ./ops/scripts/prem/generate-site.sh && \
+        docker build -t selfpraxis:prod-\$SHA . && \
+        docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d prod_{{color}}"
+
+
+# Flip the traffic on VPS
+# Usage: just flip-traffic 8002
+flip-traffic port:
+    @echo "Flipping generic upstream to port {{port}} on {{vps_host}}..."
+    # Note: This is a simplistic sed; implies you have write access to the file via sudo/user
+    ssh -t {{vps_host}} "echo 'upstream selfpraxis_prod_active { server 100.104.75.126:{{port}}; }' | sudo tee {{vps_upstream_conf}} && sudo nginx -t && sudo systemctl reload nginx"

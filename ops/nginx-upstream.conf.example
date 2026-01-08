@@ -1,0 +1,11 @@
+# /etc/nginx/snippets/selfpraxis-prod-upstream.conf
+#
+# Helper file for Blue/Green deployment switching.
+# 
+# To make BLUE live:
+# upstream selfpraxis_prod_active { server 100.104.75.126:8000; }
+#
+# To make GREEN live:
+# upstream selfpraxis_prod_active { server 100.104.75.126:8002; }
+
+upstream selfpraxis_prod_active { server 100.104.75.126:8000; }

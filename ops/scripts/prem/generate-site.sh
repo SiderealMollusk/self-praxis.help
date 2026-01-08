@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+# Path to the repository root
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+
+# Read Configuration
+CODENAME=$(cat "$REPO_ROOT/CODENAME")
+GIT_SHA=$(git rev-parse --short HEAD)
+
+# Output Info
+echo "Generating site..."
+echo "  Codename: $CODENAME"
+echo "  SHA:      $GIT_SHA"
+
+# Generate content
+sed -e "s/__CODENAME__/$CODENAME/g" \
+    -e "s/__GIT_SHA__/$GIT_SHA/g" \
+    "$REPO_ROOT/site/index.template.html" > "$REPO_ROOT/site/index.html"
+
+echo "Done. Generated site/index.html"

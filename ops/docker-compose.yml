@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Production BLUE
+  # Port 8000 on Host -> 80 in Container
+  prod_blue:
+    image: selfpraxis:prod-REPLACE_WITH_SHA
+    container_name: selfpraxis-prod-blue
+    restart: always
+    ports:
+      - "8000:80"
+    networks:
+      - selfpraxis_net
+
+  # Production GREEN
+  # Port 8002 on Host -> 80 in Container
+  prod_green:
+    image: selfpraxis:prod-REPLACE_WITH_SHA
+    container_name: selfpraxis-prod-green
+    restart: always
+    ports:
+      - "8002:80"
+    networks:
+      - selfpraxis_net
+
+  # Staging
+  # Port 8001 on Host -> 80 in Container
+  staging:
+    image: selfpraxis:staging-REPLACE_WITH_SHA
+    container_name: selfpraxis-staging
+    restart: always
+    ports:
+      - "8001:80"
+    networks:
+      - selfpraxis_net
+
+networks:
+  selfpraxis_net:
+    driver: bridge
