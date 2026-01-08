@@ -145,7 +145,7 @@ const App: React.FC = () => {
         {/* Table View */}
         <div className="bg-white border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
           <div className="bg-zinc-100 border-b-2 border-black p-3 font-mono-custom text-[10px] tracking-widest flex justify-between items-center uppercase font-bold">
-            <span>Entry Protocol: {currentDay.dayName}</span>
+            <span>Showing Day: {currentDay.dayName}</span>
             <span className="text-zinc-400">{currentDay.dateStr}</span>
           </div>
           <table className="w-full border-collapse font-mono-custom text-sm">
@@ -173,7 +173,7 @@ const App: React.FC = () => {
                             value={tempText}
                             onChange={(e) => setTempText(e.target.value)}
                             onBlur={saveEditCell}
-                            placeholder="INPUT DATA..."
+                            placeholder="Enter Handle..."
                           />
                         </div>
                       ) : (
@@ -200,11 +200,11 @@ const App: React.FC = () => {
       <footer className="mt-8 py-8 border-t border-black border-dashed">
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="text-[8px] font-mono-custom text-zinc-400 uppercase tracking-[0.4em]">
-            SYSTEM VALIDATED | NO RETROACTIVE MODIFICATION
+            Njal.la Domain | Finish Data Sovereign VPS | Tailscale --> On Prem Server
           </div>
           <div className="w-24 h-[1px] bg-zinc-200"></div>
           <div className="text-[7px] font-mono-custom text-zinc-300 uppercase">
-            &copy; 2025 SHIFTSIGNUP // CORE_LOG_V1
+            &copy; Maintainer: Virgil (signal app )// unvetted.posting359@passmail.com
           </div>
         </div>
       </footer>
