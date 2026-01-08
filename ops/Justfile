@@ -36,82 +36,45 @@ verify-next:
 
 # --- Deployment Workflows ---
 
+
 # --- Secrets Management ---
 
-# Encrypt local .env to secrets.enc.env
+# Encrypt local .env to secrets.enc.env (Global Infra)
 save-secrets:
-    cd ops && sops --encrypt .env > secrets.enc.env
+    sops --encrypt .env > secrets.enc.env
 
 # Decrypt secrets.enc.env to local .env
 load-secrets:
-    cd ops && sops --decrypt secrets.enc.env > .env
+    sops --decrypt secrets.enc.env > .env
 
-# Push local .env to remote (Usage: just push-secrets [staging|prod])
-push-secrets env:
-    @echo "Pushing secrets to {{env}}..."
-    scp ops/.env {{nuc_host}}:{{nuc_root}}/{{env}}/ops/.env
+# --- App Deployment Workflows ---
 
-# --- Deployment Workflows ---
+# Deploy an App to Staging (Usage: just deploy codenames)
+deploy app:
+    @echo "Deploying {{app}}..."
+    just _git-update
+    just _push-app-config {{app}}
+    just _build-and-deploy {{app}}
 
+_push-app-config app:
+    @echo "Pushing {{app}} config..."
+    scp ../apps/{{app}}/.env {{nuc_host}}:{{nuc_root}}/apps/{{app}}/.env
 
-# Deploy to Staging
-deploy-staging:
-    @echo "Deploying to Staging..."
-    just _git-update staging
-    just push-secrets staging
-    just _build-and-deploy-staging
+_git-update:
+    ssh -t {{nuc_host}} "cd {{nuc_root}} && git pull"
 
-# SMART Deploy to Production (Auto-targets Inactive)
-deploy-prod:
-    @TARGET=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    echo "Active is currently the OTHER one. Deploying to $TARGET..." && \
-    just _deploy-prod-target $TARGET
-
-# Internal helper (Do not run directly)
-_deploy-prod-target color:
-    @echo "Deploying to Production {{color}}..."
-    just _git-update prod
-    just push-secrets prod
-    just _build-and-deploy-prod {{color}}
-
-# --- Internal Deployment Steps ---
-
-_git-update folder:
-    ssh -t {{nuc_host}} "cd {{nuc_root}}/{{folder}} && git pull"
-
-_build-and-deploy-staging:
-    ssh -t {{nuc_host}} "cd {{nuc_root}}/staging && \
+_build-and-deploy app:
+    ssh -t {{nuc_host}} "cd {{nuc_root}} && \
         SHA=\$(git rev-parse --short HEAD) && \
-        ./ops/scripts/prem/generate-site.sh && \
-        cp ops/docker-compose.yml ../docker/ && \
-        docker build -t selfpraxis:staging-\$SHA . && \
-        STAGING_TAG=\$SHA docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d staging"
-
-_build-and-deploy-prod color:
-    ssh -t {{nuc_host}} "cd {{nuc_root}}/prod && \
-        SHA=\$(git rev-parse --short HEAD) && \
-        ./ops/scripts/prem/generate-site.sh && \
-        cp ops/docker-compose.yml ../docker/ && \
-        docker build -t selfpraxis:prod-\$SHA . && \
-        PROD_TAG=\$SHA docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d prod_{{color}}"
-
-# Promote the Inactive Color to LIVE
-promote:
-    @TARGET=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    echo "Promoting $TARGET to LIVE..." && \
-    if [ "$TARGET" == "green" ]; then TARGET_PORT="8002"; else TARGET_PORT="8000"; fi && \
-    just _flip-traffic $TARGET_PORT
-
-# Internal helper
-_flip-traffic port:
-    @echo "Flipping upstream to port {{port}} on {{vps_host}}..."
-    ssh -t {{vps_host}} "echo 'upstream selfpraxis_prod_active { server 100.104.75.126:{{port}}; }' | sudo tee {{vps_upstream_conf}} && sudo nginx -t && sudo systemctl reload nginx"
+        ./ops/scripts/prem/generate-site.sh {{app}} && \
+        cp ops/docker-compose.yml docker/ && \
+        docker build -t selfpraxis:{{app}}-\$SHA apps/{{app}} && \
+        {{app | update_to_upper}}_TAG=\$SHA docker compose -f docker/docker-compose.yml up -d {{app}}"
 
 # Bootstrap the Nuc (Run once)
 bootstrap-nuc:
     @echo "Bootstrapping Nuc directories and repos..."
     ssh -t {{nuc_host}} "sudo mkdir -p {{nuc_root}} && sudo chown \$(whoami) {{nuc_root}} && \
     cd {{nuc_root}} && \
-    ([ -d staging ] || git clone https://github.com/SiderealMollusk/self-praxis.help.git staging) && \
-    ([ -d prod ] || git clone https://github.com/SiderealMollusk/self-praxis.help.git prod) && \
+    ([ -d .git ] || git clone https://github.com/SiderealMollusk/self-praxis.help.git .) && \
     mkdir -p docker && echo 'Bootstrap complete!'"

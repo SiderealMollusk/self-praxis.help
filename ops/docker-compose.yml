@@ -1,33 +1,22 @@
 version: '3.8'
 
 services:
-  # Production BLUE
+  # App: Codenames
   # Port 8000 on Host -> 80 in Container
-  prod_blue:
-    image: selfpraxis:prod-${PROD_TAG}
-    container_name: selfpraxis-prod-blue
+  codenames:
+    image: selfpraxis:codenames-${CODENAMES_TAG}
+    container_name: selfpraxis-codenames
     restart: always
     ports:
       - "8000:80"
     networks:
       - selfpraxis_net
 
-  # Production GREEN
-  # Port 8002 on Host -> 80 in Container
-  prod_green:
-    image: selfpraxis:prod-${PROD_TAG}
-    container_name: selfpraxis-prod-green
-    restart: always
-    ports:
-      - "8002:80"
-    networks:
-      - selfpraxis_net
-
-  # Staging
+  # App: Series Bible
   # Port 8001 on Host -> 80 in Container
-  staging:
-    image: selfpraxis:staging-${STAGING_TAG}
-    container_name: selfpraxis-staging
+  series-bible:
+    image: selfpraxis:series-bible-${SERIES_BIBLE_TAG}
+    container_name: selfpraxis-series-bible
     restart: always
     ports:
       - "8001:80"
