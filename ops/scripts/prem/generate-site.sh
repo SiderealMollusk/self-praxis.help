@@ -14,8 +14,8 @@ echo "  Codename: $CODENAME"
 echo "  SHA:      $GIT_SHA"
 
 # Generate content
-sed -e "s/__CODENAME__/$CODENAME/g" \
-    -e "s/__GIT_SHA__/$GIT_SHA/g" \
+sed -e "s|__CODENAME__|$CODENAME|g" \
+    -e "s|__GIT_SHA__|$GIT_SHA|g" \
     "$REPO_ROOT/site/index.template.html" > "$REPO_ROOT/site/index.html"
 
 echo "Done. Generated site/index.html"
