@@ -115,7 +115,7 @@ const App: React.FC = () => {
               </React.Fragment>
             ))}
           </div>
-          <span className="text-[9px]">{new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+
         </div>
       </header>
 
