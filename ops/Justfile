@@ -25,8 +25,8 @@ active-color:
 
 verify-next:
     @echo "Verifying the Candidate (Inactive) deployment..."
-    @INACTIVE=$$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    if [ "$$INACTIVE" == "green" ]; then \
+    @INACTIVE=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
+    if [ "$INACTIVE" == "green" ]; then \
         echo "Candidate: GREEN (Port 8002)"; \
         curl -I http://100.104.75.126:8002; \
     elif [ "$$INACTIVE" == "blue" ]; then \
@@ -48,9 +48,9 @@ deploy-staging:
 
 # SMART Deploy to Production (Auto-targets Inactive)
 deploy-prod:
-    @TARGET=$$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    echo "Active is currently the OTHER one. Deploying to $$TARGET..." && \
-    just _deploy-prod-target $$TARGET
+    @TARGET=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
+    echo "Active is currently the OTHER one. Deploying to $TARGET..." && \
+    just _deploy-prod-target $TARGET
 
 # Internal helper (Do not run directly)
 _deploy-prod-target color:
@@ -64,10 +64,10 @@ _deploy-prod-target color:
 
 # Promote the Inactive Color to LIVE
 promote:
-    @TARGET=$$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    echo "Promoting $$TARGET to LIVE..." && \
-    if [ "$$TARGET" == "green" ]; then TARGET_PORT="8002"; else TARGET_PORT="8000"; fi && \
-    just _flip-traffic $$TARGET_PORT
+    @TARGET=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
+    echo "Promoting $TARGET to LIVE..." && \
+    if [ "$TARGET" == "green" ]; then TARGET_PORT="8002"; else TARGET_PORT="8000"; fi && \
+    just _flip-traffic $TARGET_PORT
 
 # Internal helper
 _flip-traffic port:
