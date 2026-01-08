@@ -200,7 +200,7 @@ const App: React.FC = () => {
       <footer className="mt-8 py-8 border-t border-black border-dashed">
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="text-[8px] font-mono-custom text-zinc-400 uppercase tracking-[0.4em]">
-            Njal.la Domain | Finish Data Sovereign VPS | Tailscale --> On Prem Server
+            Njal.la Domain | Finish Data Sovereign VPS | Tailscale {'->'} On Prem Server
           </div>
           <div className="w-24 h-[1px] bg-zinc-200"></div>
           <div className="text-[7px] font-mono-custom text-zinc-300 uppercase">
