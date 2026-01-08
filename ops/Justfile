@@ -37,15 +37,20 @@ verify-next:
 # --- Deployment Workflows ---
 
 
+
 # --- Secrets Management ---
 
-# Encrypt local .env to secrets.enc.env (Global Infra)
+# Encrypt ALL local .env files to secrets.enc.env
 save-secrets:
-    sops --encrypt .env > secrets.enc.env
+    sops --encrypt ops/.env > ops/secrets.enc.env
+    sops --encrypt apps/codenames/.env > apps/codenames/secrets.enc.env
+    sops --encrypt apps/series-bible/.env > apps/series-bible/secrets.enc.env
 
-# Decrypt secrets.enc.env to local .env
+# Decrypt ALL secrets.enc.env to local .env
 load-secrets:
-    sops --decrypt secrets.enc.env > .env
+    sops --decrypt ops/secrets.enc.env > ops/.env
+    sops --decrypt apps/codenames/secrets.enc.env > apps/codenames/.env
+    sops --decrypt apps/series-bible/secrets.enc.env > apps/series-bible/.env
 
 # --- App Deployment Workflows ---
 
