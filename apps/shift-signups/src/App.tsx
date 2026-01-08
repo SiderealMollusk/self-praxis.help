@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   // Fetch initial data
   useEffect(() => {
-    fetch('/api/data')
+    fetch('/shift-signups/api/data')
       .then(res => res.json())
       .then(data => {
         if (data.shifts) setShifts(data.shifts);
@@ -38,7 +38,7 @@ const App: React.FC = () => {
       setShifts(newShifts);
 
       // API Call
-      fetch('/api/shift', {
+      fetch('/shift-signups/api/shift', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key: editingCell, value: tempText })
@@ -60,7 +60,7 @@ const App: React.FC = () => {
       setConfig(newConfig);
 
       // API Call
-      fetch('/api/config', {
+      fetch('/shift-signups/api/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key: editingHeader, value: tempText.trim() })

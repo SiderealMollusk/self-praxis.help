@@ -62,6 +62,7 @@ app.post('/api/shift', (req, res) => {
     const db = readDb();
     db.shifts = db.shifts || {};
     db.shifts[key] = value || ""; // Allow clearing
+    console.log(`Updated shift: ${key} -> ${value}`);
     writeDb(db);
 
     res.json({ success: true, shifts: db.shifts });
