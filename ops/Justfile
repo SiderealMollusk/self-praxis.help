@@ -74,12 +74,22 @@ _build-and-deploy app:
         ./ops/scripts/prem/generate-site.sh {{app}} && \
         cp ops/docker-compose.yml docker/ && \
         docker build -t selfpraxis:{{app}}-\$SHA apps/{{app}} && \
-        {{app | update_to_upper}}_TAG=\$SHA docker compose -f docker/docker-compose.yml up -d {{app}}"
+        TAG_VAR=\$(echo {{app}} | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG && \
+        export \${TAG_VAR}=\$SHA && \
+        docker compose -f docker/docker-compose.yml up -d {{app}}"
 
-# Bootstrap the Nuc (Run once)
+# --- VPS Configuration ---
+
+# Deploy Nginx Config to VPS
+deploy-vps-nginx:
+    @echo "Deploying Nginx config to {{vps_host}}..."
+    scp nginx/prod-selfpraxis.conf {{vps_host}}:/tmp/prod-selfpraxis.conf
+    ssh -t {{vps_host}} "sudo mv /tmp/prod-selfpraxis.conf /etc/nginx/sites-available/prod-selfpraxis && sudo nginx -t && sudo systemctl reload nginx"
+
+# Bootstrap the Nuc (Run once, safe to re-run)
 bootstrap-nuc:
     @echo "Bootstrapping Nuc directories and repos..."
     ssh -t {{nuc_host}} "sudo mkdir -p {{nuc_root}} && sudo chown \$(whoami) {{nuc_root}} && \
     cd {{nuc_root}} && \
-    ([ -d .git ] || git clone https://github.com/SiderealMollusk/self-praxis.help.git .) && \
+    ([ -d .git ] && git pull || git clone https://github.com/SiderealMollusk/self-praxis.help.git .) && \
     mkdir -p docker && echo 'Bootstrap complete!'"
