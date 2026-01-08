@@ -27,8 +27,14 @@ echo "  Codename: $CODENAME"
 echo "  SHA:      $GIT_SHA"
 
 # Generate content
-sed -e "s|__CODENAME__|$CODENAME|g" \
-    -e "s|__GIT_SHA__|$GIT_SHA|g" \
-    "$APP_DIR/site/index.template.html" > "$APP_DIR/site/index.html"
+# Generate content ONLY if template exists
+if [ -f "$APP_DIR/site/index.template.html" ]; then
+    sed -e "s|__CODENAME__|$CODENAME|g" \
+        -e "s|__GIT_SHA__|$GIT_SHA|g" \
+        "$APP_DIR/site/index.template.html" > "$APP_DIR/site/index.html"
+    echo "Done. Generated $APP_DIR/site/index.html"
+else
+    echo "No site/index.template.html found. Skipping generation (assumed build-time handling or SPA)."
+fi
 
 echo "Done. Generated $APP_DIR/site/index.html"
