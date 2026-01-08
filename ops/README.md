@@ -1,68 +1,54 @@
 # Operations & Deployment
 
-This directory contains the operational logic for `self-praxis.help`, implementing a **Blue/Green Deployment Strategy** on a split infrastructure.
+This directory contains the operational logic for `self-praxis.help`, a personal monorepo hosting multiple applications.
 
 ## Infrastructure Architecture
 
-*   **Public Frontend (VPS)**: Runs Nginx as a Load Balancer / Reverse Proxy. Handles TLS termination and routes traffic to the active backend.
-*   **Private Backend (Nuc)**: Runs Docker containers. Accessible via Tailscale.
-    *   **Staging**: Port `8001` (Always live).
-    *   **Production Blue**: Port `8000`.
-    *   **Production Green**: Port `8002`.
+*   **Public Frontend (VPS)**: Runs Nginx. Handles TLS termination and routes traffic based on URL paths.
+    *   `/` -> **Codenames** (Port 8000)
+    *   `/codenames` -> **Codenames** (Port 8000)
+    *   `/series-bible` -> **Series Bible** (Port 8001)
+*   **Private Backend (Nuc)**: Runs Docker containers via Docker Compose. Accessible via Tailscale.
+    *   **Repo Location**: `/srv/selfpraxis`
 
 ## Deployment Workflow
 
 All commands are run from the `ops/` directory using `just`.
 
-### 1. Staging Deployment
-Deploy immediately to the staging slot to verify changes.
+### 1. Secrets Management (SOPS)
+We use SOPS to manage `.env` files. Secrets are committed as encrypted `secrets.enc.env` files.
 
+**If you edit a `.env` file (e.g., `apps/codenames/.env`), you must re-encrypt it:**
 ```bash
-# 1. Commit and Push your changes (Required!)
-git add . && git commit -m "..." && git push
-
-# 2. Deploy
-just deploy-staging
-
-# 3. Verify (on Tailscale)
-# Visit http://100.104.75.126:8001
+just save-secrets
+git commit -am "update secrets"
 ```
 
-### 2. Production Deployment (Blue/Green)
-Production uses a zero-downtime Blue/Green strategy. You always deploy to the *inactive* slot (the color not currently live), verify it, and then flip the traffic.
-
-**Step A: Check Status**
-See which color is currently live.
+**If you pull fresh code/secrets:**
 ```bash
-just active-color
-# Output: "blue" or "green"
+just load-secrets
 ```
 
-**Step B: Deploy to Candidate**
-This automatically detects the *inactive* slot and deploys the latest code to it.
+### 2. Application Deployment
+To deploy an app (updates code, pushes secrets, rebuilds container):
+
 ```bash
-just deploy-prod
+# Usage: just deploy <app-name>
+just deploy codenames
+just deploy series-bible
 ```
 
-**Step C: Verify Candidate**
-Wait for the container to start, then verify it is healthy. This checks the specific port of the inactive slot.
-```bash
-just verify-next
-# Output: HTTP 200 OK ...
-```
+### 3. Infrastructure Updates
+If you change the Nginx routing configuration (`ops/nginx/prod-selfpraxis.conf`):
 
-**Step D: Promote (Go Live)**
-Switch the VPS traffic to the new version.
 ```bash
-just promote
+just deploy-vps-nginx
 ```
 
 ## Directory Structure
 
-*   **`Justfile`**: The command center. Run `just` to see all recipes.
-*   **`scripts/`**: Helper scripts organized by where they run:
-    *   **`dev/`**: Helper logic that runs on your local machine (e.g., determining the active color).
-    *   **`prem/`**: Scripts executed on the Nuc (e.g., site generation).
-    *   **`vps/`**: Scripts executed on the VPS (e.g., checking configuration).
-*   **`docker-compose.yml`**: Defines the services (Prod Blue, Prod Green, Staging).
+*   **`Justfile`**: The command runner.
+*   **`docker-compose.yml`**: Defines the services (`codenames`, `series-bible`).
+*   **`nginx/`**: Contains the production Nginx configuration.
 *   **`.env`**: (GitIgnored) Contains sensitive IPs and paths.
+*   **`secrets.enc.env`**: Encrypted version of `.env`.
