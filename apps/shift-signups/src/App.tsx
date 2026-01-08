@@ -3,23 +3,9 @@ import { getNextShiftDays, TIME_SLOTS } from './constants';
 import type { ShiftData } from './types';
 
 const App: React.FC = () => {
-  // Persistence for shifts
-  const [shifts, setShifts] = useState<ShiftData>(() => {
-    const saved = localStorage.getItem('shifts_data');
-    return saved ? JSON.parse(saved) : {};
-  });
-
-  // Persistence for header config
-  const [config, setConfig] = useState(() => {
-    const saved = localStorage.getItem('header_config');
-    const defaultData = { set: "SET", from: "FROM", config: "CONFIG" };
-    if (!saved) return defaultData;
-    try {
-      return JSON.parse(saved);
-    } catch {
-      return defaultData;
-    }
-  });
+  // State for shifts and config (initialized empty, fetched on mount)
+  const [shifts, setShifts] = useState<ShiftData>({});
+  const [config, setConfig] = useState({ set: "SET", from: "FROM", config: "CONFIG" });
 
   const [days] = useState(() => getNextShiftDays());
   const [selectedDayIdx, setSelectedDayIdx] = useState(0);
@@ -29,13 +15,16 @@ const App: React.FC = () => {
   const [editingHeader, setEditingHeader] = useState<string | null>(null);
   const [tempText, setTempText] = useState("");
 
+  // Fetch initial data
   useEffect(() => {
-    localStorage.setItem('shifts_data', JSON.stringify(shifts));
-  }, [shifts]);
-
-  useEffect(() => {
-    localStorage.setItem('header_config', JSON.stringify(config));
-  }, [config]);
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(data => {
+        if (data.shifts) setShifts(data.shifts);
+        if (data.config) setConfig(data.config);
+      })
+      .catch(err => console.error("Failed to load data:", err));
+  }, []);
 
   const startEditingCell = (key: string) => {
     setEditingCell(key);
@@ -44,7 +33,17 @@ const App: React.FC = () => {
 
   const saveEditCell = () => {
     if (editingCell) {
-      setShifts(prev => ({ ...prev, [editingCell]: tempText }));
+      // Optimistic Update
+      const newShifts = { ...shifts, [editingCell]: tempText };
+      setShifts(newShifts);
+
+      // API Call
+      fetch('/api/shift', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: editingCell, value: tempText })
+      }).catch(err => console.error("Save failed:", err));
+
       setEditingCell(null);
     }
   };
@@ -56,7 +55,17 @@ const App: React.FC = () => {
 
   const saveEditHeader = () => {
     if (editingHeader) {
-      setConfig((prev: any) => ({ ...prev, [editingHeader]: tempText.trim() }));
+      // Optimistic Update
+      const newConfig = { ...config, [editingHeader]: tempText.trim() };
+      setConfig(newConfig);
+
+      // API Call
+      fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: editingHeader, value: tempText.trim() })
+      }).catch(err => console.error("Save failed:", err));
+
       setEditingHeader(null);
     }
   };

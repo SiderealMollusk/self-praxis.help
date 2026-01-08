@@ -29,6 +29,8 @@ services:
     image: selfpraxis:shift-signups-${SHIFT_SIGNUPS_TAG}
     container_name: selfpraxis-shift-signups
     restart: always
+    volumes:
+      - ./data/shift-signups:/app/data
     ports:
       - "8002:80"
     networks:

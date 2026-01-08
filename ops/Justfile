@@ -90,4 +90,6 @@ bootstrap-nuc:
     ssh -t {{nuc_host}} "sudo mkdir -p {{nuc_root}} && sudo chown \$(whoami) {{nuc_root}} && \
     cd {{nuc_root}} && \
     ([ -d .git ] && git pull || git clone https://github.com/SiderealMollusk/self-praxis.help.git .) && \
-    mkdir -p docker && echo 'Bootstrap complete!'"
+    mkdir -p docker && \
+    mkdir -p data/shift-signups && sudo chown -R 1000:1000 data/shift-signups && \
+    echo 'Bootstrap complete!'"
