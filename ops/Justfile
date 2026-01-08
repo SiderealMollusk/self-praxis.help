@@ -15,26 +15,7 @@ set shell := ["bash", "-c"]
 default:
     @just --list --unsorted
 
-# --- Local Helpers ---
 
-# Check which color is currently active (run from laptop, queries VPS)
-# --- Status & Verification ---
-# --- Status & Verification ---
-active-color:
-    @./scripts/dev/get-active-color.sh {{vps_host}}
-
-verify-next:
-    @echo "Verifying the Candidate (Inactive) deployment..."
-    @INACTIVE=$(./scripts/dev/get-inactive-color.sh {{vps_host}}) && \
-    if [ "$INACTIVE" == "green" ]; then \
-        echo "Candidate: GREEN (Port 8002)"; \
-        curl -I http://100.104.75.126:8002; \
-    elif [ "$$INACTIVE" == "blue" ]; then \
-        echo "Candidate: BLUE (Port 8000)"; \
-        curl -I http://100.104.75.126:8000; \
-    fi
-
-# --- Deployment Workflows ---
 
 
 
