@@ -33,3 +33,7 @@ services:
       - "8009:80"
     networks:
       - selfpraxis_net
+
+networks:
+  selfpraxis_net:
+    driver: bridge
