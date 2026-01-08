@@ -44,7 +44,7 @@ deploy-staging:
         ./ops/scripts/prem/generate-site.sh && \
         cp ops/docker-compose.yml ../docker/ && \
         docker build -t selfpraxis:staging-\$SHA . && \
-        docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d staging"
+        STAGING_TAG=\$SHA docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d staging"
 
 # SMART Deploy to Production (Auto-targets Inactive)
 deploy-prod:
@@ -60,7 +60,7 @@ _deploy-prod-target color:
         ./ops/scripts/prem/generate-site.sh && \
         cp ops/docker-compose.yml ../docker/ && \
         docker build -t selfpraxis:prod-\$SHA . && \
-        docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d prod_{{color}}"
+        PROD_TAG=\$SHA docker compose -f {{nuc_root}}/docker/docker-compose.yml up -d prod_{{color}}"
 
 # Promote the Inactive Color to LIVE
 promote:
