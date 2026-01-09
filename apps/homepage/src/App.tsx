@@ -19,12 +19,12 @@ const App: React.FC = () => {
             Unvetted.net
           </h1>
           <div className="text-xs tracking-widest mt-2 uppercase text-zinc-500">
-            Virgil // Signal App
+            Anonymous Virtual Private Server //  melt <span className="grayscale">&#129482;</span> and free <span className="grayscale">&#127817;</span>
           </div>
         </div>
         <div className="text-right text-[10px] tracking-widest uppercase flex flex-col gap-1">
           <div className="bg-black text-white px-1">Status: Online</div>
-          <div>Loc: Unvetted.net</div>
+          <div>Loc: Nuremberg, Germany</div>
         </div>
       </header>
 
@@ -32,8 +32,8 @@ const App: React.FC = () => {
       <main className="flex-grow">
         <div className="border-2 border-black p-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white">
           <div className="bg-black text-white p-3 flex justify-between text-xs uppercase tracking-widest font-bold">
-            <span>Manifesto / Bio</span>
-            <span>Ref: #001</span>
+            <span>Maintainer: Virgil (Signal App) </span>
+            <span>Doc: #001</span>
           </div>
 
           <div className="p-8 leading-relaxed text-lg font-sans">
@@ -41,11 +41,11 @@ const App: React.FC = () => {
               I am Virgil.
             </p>
             <p className="text-zinc-800 mb-6">
-              This web page is an anonymous space for people working to melt <span className="grayscale">&#129482;</span> and liberate <span className="grayscale">&#127817;</span>. This domain is held by a privacy focused domain registrar, and served by a privacy focused VPS provider in the EU.
+              This web page is an anonymous space for people working to. The domain is held by a privacy focused domain registrar, and served by a VPS provider in the EU.
             </p>
             <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative group">
               <div className="flex justify-between items-center border-b border-dashed border-zinc-300 pb-1 mb-1">
-                <div className="text-[9px] uppercase tracking-widest text-zinc-400">Third-Party Verification</div>
+                <div className="text-[9px] uppercase tracking-widest text-zinc-400">Run this command for server details:</div>
                 <button
                   onClick={handleCopy}
                   className="text-[9px] uppercase font-bold tracking-widest hover:text-white hover:bg-black px-1 transition-colors"
