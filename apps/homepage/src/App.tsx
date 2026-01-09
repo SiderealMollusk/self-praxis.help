@@ -49,16 +49,25 @@ const App: React.FC = () => {
               Welcome Comrade
             </p>
             <p className="mb-6 text-base tracking-tight">
-              Prediction: you are on this page because you saw a link on an unvetted signal group, and went snooping around trying to figure out what you were even looking at. Fair enough. Basicly there are a lot of activists who are relying on "don't share this link too publicly" style security through obscurity because nobody wants to do will sign up for anything except SignalApp.
+              This domain is maintained by Virgil (SignalApp). The Only thing here is Eastmont Food Distribution shift sign-ups. Just like the cryptopad anyone with the URL can see and edit the information, and we rely on security through obscurity. People like cryptopad because users can hide information from the platform owners. Using this domain has the same level of trust as using a pad I created. The trade off is that I don’t have anything like their reputation, HOWEVER it is <b>a custom ui for our needs, and automatically deletes all information about past shifts.</b>
             </p>
             <p className="mb-6 text-base tracking-tight">
-              I'm a bay area activiest who's slowly building frustration with cryptopad boiled over into a weekend project, locking down a EU server and a domain registar from Iceland.
+              I am interested in figuring out how to contribute to technical abilities to Bay Area organizing. That is what motivated me to spend the energy to set up a secure server for something ultimately so simple. It we don't adopt it, promise I will not be but hurt.
             </p>
-            <p><u><a href="https://www.netcup.de">netcup</a></u>. They aren't some great data sovereign heros, but have stated that without a German court order they have to protect your data under German law. Which is about as good you can get without loads of money or sec-ops expertise.
-            </p>
+            <div className="mb-6 text-base tracking-tight">
+              <p className="mb-2">For some basic evidence I know what I'm doing:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>The server is hosted by <u><a href="https://www.netcup.de">netcup</a></u> physically in Germany, out of reach of US law enforcement.</li>
+                <li>SSL Lab Rating: <u><a href="https://www.ssllabs.com/ssltest/analyze.html?d=unvetted.net">https://www.ssllabs.com/ssltest/analyze.html?d=unvetted.net</a></u></li>
+                <li>Security Headers: <u><a href="https://securityheaders.com/?q=unvetted.net&followRedirects=on">https://securityheaders.com/?q=unvetted.net&followRedirects=on</a></u></li>
+                <li>Finally, for easy verification:</li>
+              </ul>
+            </div>
             <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative group">
               <div className="flex justify-between items-center border-b border-dashed border-zinc-300 pb-1 mb-1">
-                <div className="text-[9px] uppercase tracking-widest text-zinc-400">Run this command for server details:</div>
+                <div className="text-[9px] uppercase tracking-widest text-zinc-400">
+                  <span className="inline-block grayscale">⚠️</span> Don't paste bash from the internet into a terminal:
+                </div>
                 <button
                   onClick={handleCopy}
                   className="text-[9px] uppercase font-bold tracking-widest hover:text-white hover:bg-black px-1 transition-colors"
@@ -86,7 +95,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="border-t-2 border-dashed border-black p-2 flex justify-between text-[10px] uppercase font-bold bg-zinc-50">
-            <span>End of Transmission</span>
+            <span>See you out there</span>
             <span className="animate-pulse">_</span>
           </div>
         </div>
@@ -94,8 +103,7 @@ const App: React.FC = () => {
 
       {/* Footer */}
       < footer className="mt-12 py-8 border-t border-black border-dashed flex flex-col items-center gap-4 text-[9px] uppercase tracking-widest text-zinc-400" >
-        <div>Njal.la Domain | Finish Data Sovereign VPS | Tailscale {'->'} On Prem Server</div>
-        <div>&copy; {new Date().getFullYear()} Virgil // unvetted.posting359@passmail.com</div>
+        <div>Virgil // unvetted.posting359@passmail.com</div>
       </footer >
     </div >
   );
