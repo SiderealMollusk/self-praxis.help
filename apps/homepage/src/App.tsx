@@ -41,7 +41,7 @@ const App: React.FC = () => {
               I am Virgil.
             </p>
             <p className="text-zinc-800 mb-6">
-              This web page is an anonymous space for people working to melt &#129482; and liberate &#127817;. This domain is held by a privacy focused domain registrar, and served by a privacy focused VPS provider in the EU.
+              This web page is an anonymous space for people working to melt <span className="grayscale">&#129482;</span> and liberate <span className="grayscale">&#127817;</span>. This domain is held by a privacy focused domain registrar, and served by a privacy focused VPS provider in the EU.
             </p>
             <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative group">
               <div className="flex justify-between items-center border-b border-dashed border-zinc-300 pb-1 mb-1">
