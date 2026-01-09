@@ -84,6 +84,12 @@ deploy-vps-nginx:
     scp nginx/prod-selfpraxis.conf {{vps_host}}:/tmp/prod-selfpraxis.conf
     ssh -t {{vps_host}} "sudo mv /tmp/prod-selfpraxis.conf /etc/nginx/sites-available/prod-selfpraxis && sudo nginx -t && sudo systemctl reload nginx"
 
+# Harden VPS Security (Run once)
+harden-vps:
+    @echo "Hardening VPS {{vps_host}}..."
+    scp scripts/vps/harden.sh {{vps_host}}:/tmp/harden.sh
+    ssh -t {{vps_host}} "chmod +x /tmp/harden.sh && sudo /tmp/harden.sh && rm /tmp/harden.sh"
+
 # Bootstrap the Nuc (Run once, safe to re-run)
 bootstrap-nuc:
     @echo "Bootstrapping Nuc directories and repos..."

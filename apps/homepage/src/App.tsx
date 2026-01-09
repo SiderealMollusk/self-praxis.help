@@ -7,10 +7,10 @@ const App: React.FC = () => {
       <header className="border-b-4 border-black pb-4 mb-6 flex justify-between items-end">
         <div>
           <h1 className="text-6xl font-extrabold uppercase tracking-tighter italic">
-            VIRGIL
+            Unvetted.net
           </h1>
           <div className="text-xs tracking-widest mt-2 uppercase text-zinc-500">
-            Identity // Core_V1
+            Virgil // Signal App
           </div>
         </div>
         <div className="text-right text-[10px] tracking-widest uppercase flex flex-col gap-1">
