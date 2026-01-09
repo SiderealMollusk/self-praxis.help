@@ -15,6 +15,10 @@ set shell := ["bash", "-c"]
 default:
     @just --list --unsorted
 
+# Run Security Audit against live site
+audit:
+    @./ops/scripts/prem/audit.sh
+
 
 
 

@@ -32,7 +32,7 @@ const App: React.FC = () => {
               I am Virgil.
             </p>
             <p className="text-zinc-800 mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Do you work to melt &amp#129482; and liberate &amp;#127817;? Do you hate cryptopad on mobile? can't wait for proton sheets fully operational?
             </p>
             <p className="text-zinc-600 mb-4 font-mono-custom text-sm">
                     // Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
