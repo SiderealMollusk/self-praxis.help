@@ -27,6 +27,9 @@ const App: React.FC = () => {
           <div className="text-base tracking-widest mt-2 uppercase text-zinc-500">
             Melt <span className="grayscale">&#129482;</span> // Free <span className="grayscale">&#127817;</span>
           </div>
+          <a href="/shift-signups/" className="text-xs font-bold tracking-wider text-zinc-500 underline hover:text-black mt-1">
+            Shift Signups
+          </a>
         </div>
       </header>
 

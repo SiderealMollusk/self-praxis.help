@@ -83,39 +83,51 @@ const App: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col select-none">
       {/* Header Section */}
-      <header className="border-b-4 border-black pb-4 mb-6">
-        <h1 className="text-5xl font-extrabold uppercase tracking-tighter italic">
-          ShiftSignup
-        </h1>
-        <div className="flex justify-between items-center mt-2 font-mono-custom text-[10px] tracking-widest text-zinc-500 uppercase">
-          <div className="flex gap-1 items-center">
-            {['set', 'from', 'config'].map((part, i) => (
-              <React.Fragment key={part}>
-                <div className="inline-block relative">
-                  {editingHeader === part ? (
-                    <input
-                      autoFocus
-                      className="bg-black text-white px-1 outline-none lowercase min-w-[4ch]"
-                      style={{ width: `${Math.max(tempText.length, 4)}ch` }}
-                      value={tempText}
-                      onChange={(e) => setTempText(e.target.value)}
-                      onBlur={saveEditHeader}
-                      onKeyDown={(e) => e.key === 'Enter' && saveEditHeader()}
-                    />
-                  ) : (
-                    <span
-                      className="cursor-pointer hover:text-black hover:underline inline-block min-w-[2ch]"
-                      onClick={() => startEditingHeader(part)}
-                    >
-                      {config[part as keyof typeof config] || "___"}
-                    </span>
-                  )}
-                </div>
-                {i < 2 && <span className="mx-1 text-zinc-300">|</span>}
-              </React.Fragment>
-            ))}
+      <header className="border-b-4 border-black pb-4 mb-6 flex justify-between items-end">
+        <div>
+          <h1 className="text-6xl font-extrabold uppercase tracking-tighter italic">
+            Shift Signups
+          </h1>
+          <div className="flex justify-between items-center mt-2 font-mono-custom text-[10px] tracking-widest text-zinc-500 uppercase">
+            <div className="flex gap-1 items-center">
+              {['set', 'from', 'config'].map((part, i) => (
+                <React.Fragment key={part}>
+                  <div className="inline-block relative">
+                    {editingHeader === part ? (
+                      <input
+                        autoFocus
+                        className="bg-black text-white px-1 outline-none lowercase min-w-[4ch]"
+                        style={{ width: `${Math.max(tempText.length, 4)}ch` }}
+                        value={tempText}
+                        onChange={(e) => setTempText(e.target.value)}
+                        onBlur={saveEditHeader}
+                        onKeyDown={(e) => e.key === 'Enter' && saveEditHeader()}
+                      />
+                    ) : (
+                      <span
+                        className="cursor-pointer hover:text-black hover:underline inline-block min-w-[2ch]"
+                        onClick={() => startEditingHeader(part)}
+                      >
+                        {config[part as keyof typeof config] || "___"}
+                      </span>
+                    )}
+                  </div>
+                  {i < 2 && <span className="mx-1 text-zinc-300">|</span>}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
-
+        </div>
+        <div className="text-right tracking-widest uppercase flex flex-col items-end gap-1">
+          <div className="text-base tracking-widest mt-2 uppercase text-zinc-500">
+            "Security" through obscurity
+          </div>
+          <div className="text-base tracking-widest mt-2 uppercase text-zinc-500">
+            Melt <span className="grayscale">&#129482;</span> // Free <span className="grayscale">&#127817;</span>
+          </div>
+          <a href="https://unvetted.net/" className="text-xs font-bold tracking-wider text-zinc-500 underline hover:text-black mt-1">
+            About
+          </a>
         </div>
       </header>
 
