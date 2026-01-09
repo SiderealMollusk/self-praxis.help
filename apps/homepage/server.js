@@ -8,7 +8,14 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.set('trust proxy', 1); // Trust first proxy (Nginx)
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+    xFrameOptions: false,
+    xContentTypeOptions: false,
+    referrerPolicy: false,
+    strictTransportSecurity: false,
+    crossOriginEmbedderPolicy: false
+}));
 app.disable('x-powered-by'); // Redundant with Helmet but good practice
 const PORT = 80;
 

@@ -18,7 +18,14 @@ const DB_FILE = path.join(DATA_DIR, 'events.jsonl');
 const MAX_DB_SIZE_BYTES = 10 * 1024 * 1024; // 10MB Hard Limit
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+    xFrameOptions: false,
+    xContentTypeOptions: false,
+    referrerPolicy: false,
+    strictTransportSecurity: false,
+    crossOriginEmbedderPolicy: false
+}));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'dist')));
