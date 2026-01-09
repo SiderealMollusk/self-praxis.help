@@ -85,7 +85,7 @@ const App: React.FC = () => {
                 <li>Don't put anything too sensitive here</li>
                 <li>Don't put anything important, it is not backed up and has auto-delete</li>
                 <li>Do not share this URL with anyone you don't trust</li>
-                <li>I can see all information on this site <u><a href="https://www.schneierfacts.com">Bruce Schneier</a></u></li>
+                <li>I can see all information on this site</li>
               </ul>
             </p>
           </div>
