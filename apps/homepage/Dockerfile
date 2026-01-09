@@ -1,27 +1,26 @@
+# Start as root (default) but prepare permissions
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package info and install dependencies (including server deps)
-COPY package*.json ./
+# 1. Ownership: Give /app to `node` user upfront
+RUN chown -R node:node /app
+
+# 2. Switch to `node` user immediately
+USER node
+
+# 3. Copy files with correct ownership (Avoids massive chown later)
+COPY --chown=node:node package*.json ./
 RUN npm ci
 
-# Copy source and build
-COPY . .
+COPY --chown=node:node . .
 RUN npm run build
 
-# Create data directory (will be mounted over, but good for local dev)
+# 4. Create data directory (as node user)
 RUN mkdir -p data
 
 # Expose port 80
 EXPOSE 80
-
-# --- Hardening ---
-# 1. Ensure `node` user owns the app directory
-RUN chown -R node:node /app
-
-# 2. Switch to non-root user
-USER node
 
 # Run the server
 CMD ["node", "server.js"]
