@@ -18,8 +18,8 @@ const App: React.FC = () => {
           <h1 className="text-6xl font-extrabold uppercase tracking-tighter italic">
             Unvetted.net
           </h1>
-          <div className="text-xs tracking-widest mt-2 uppercase text-zinc-500">
-            Anonymous Virtual Private Server //  melt <span className="grayscale">&#129482;</span> and free <span className="grayscale">&#127817;</span>
+          <div className="text-sm tracking-widest mt-2 uppercase text-zinc-500">
+            Free <span className="grayscale">&#127817;</span> melt <span className="grayscale">&#129482;</span>// Anonymous Virtual Private Server
           </div>
         </div>
         <div className="text-right text-[10px] tracking-widest uppercase flex flex-col gap-1">
