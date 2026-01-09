@@ -29,8 +29,19 @@ services:
     image: selfpraxis:shift-signups-${SHIFT_SIGNUPS_TAG}
     container_name: selfpraxis-shift-signups
     restart: always
+    read_only: true # Hardening: File system is immutable
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL # Hardening: Drop all Linux capabilities
+    # cap_add:
+    #   - NET_BIND_SERVICE # Required if binding to port 80? (Actually, let's keep it safe. If it fails, we change port to 8080)
+    # Testing note: Non-root binding to port 80 usually requires NET_BIND_SERVICE.
+    cap_add:
+      - NET_BIND_SERVICE
     volumes:
-      - ../data/shift-signups:/app/data
+      - ../data/shift-signups:/app/data # Writable volume exception
+      - /tmp # Temp directory often needed by Node
     ports:
       - "8002:80"
     networks:
@@ -42,6 +53,15 @@ services:
     image: selfpraxis:homepage-${HOMEPAGE_TAG}
     container_name: selfpraxis-homepage
     restart: always
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - /tmp # express/helmet might need temp? 
     ports:
       - "8003:80"
     networks:

@@ -16,5 +16,12 @@ RUN mkdir -p data
 # Expose port 80
 EXPOSE 80
 
+# --- Hardening ---
+# 1. Ensure `node` user owns the app directory
+RUN chown -R node:node /app
+
+# 2. Switch to non-root user
+USER node
+
 # Run the server
 CMD ["node", "server.js"]
