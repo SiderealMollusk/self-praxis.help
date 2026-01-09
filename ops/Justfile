@@ -17,7 +17,7 @@ default:
 
 # Run Security Audit against live site
 audit:
-    @./ops/scripts/prem/audit.sh
+    @scripts/prem/audit.sh
 
 
 
