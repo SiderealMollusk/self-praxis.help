@@ -18,30 +18,43 @@ const App: React.FC = () => {
           <h1 className="text-6xl font-extrabold uppercase tracking-tighter italic">
             Unvetted.net
           </h1>
-          <div className="text-lg tracking-widest mt-2 uppercase text-zinc-500">
 
-          </div>
         </div>
-        <div className="text-right text-[10px] tracking-widest uppercase flex flex-col gap-1">
-          <div className="bg-black text-white px-1">Status: Online</div>
-          <div>Loc: Nuremberg, Germany</div>
+        <div className="text-right tracking-widest uppercase flex flex-col items-end gap-1">
+          <div className="text-base tracking-widest mt-2 uppercase text-zinc-500">
+            "Security" through obscurity
+          </div>
+          <div className="text-base tracking-widest mt-2 uppercase text-zinc-500">
+            Melt <span className="grayscale">&#129482;</span> // Free <span className="grayscale">&#127817;</span>
+          </div>
         </div>
       </header>
 
       {/* Content Body as Invoice Items */}
       <main className="flex-grow">
         <div className="border-2 border-black p-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white">
-          <div className="p-3 flex justify-between text-xs uppercase tracking-widest font-bold" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 10px, #fff 10px, #fff 20px)' }}>
-            <span className="bg-black text-white px-2 py-0.5 shadow-sm">Maintainer: Virgil (Signal App) </span>
-            <span className="bg-black text-white px-2 py-0.5 shadow-sm">Doc: #001</span>
+          {/* Hazard Stripe Top */}
+          <div className="h-2 w-full border-b-2 border-black" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 10px, #fff 10px, #fff 20px)' }}></div>
+
+          <div className="bg-black text-white p-3 flex justify-between text-xs uppercase tracking-widest font-bold">
+            <span>Caution: Anyone can view and edit information on this site </span>
+            <span>Doc: #001</span>
           </div>
+
+          {/* Hazard Stripe Bottom */}
+          <div className="h-2 w-full border-t-2 border-black" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 10px, #fff 10px, #fff 20px)' }}></div>
 
           <div className="p-8 leading-relaxed text-lg font-sans">
             <p className="mb-6 font-bold text-3xl uppercase tracking-tight">
-
+              Welcome Comrade
             </p>
-            <p className="text-zinc-800 mb-6">
-              This web page is an anonymous space for people working to. The domain is held by a privacy focused domain registrar, and served by a VPS provider in the EU.
+            <p className="mb-6 text-base tracking-tight">
+              Prediction: you are on this page because you saw a link on an unvetted signal group, and went snooping around trying to figure out what you were even looking at. Fair enough. Basicly there are a lot of activists who are relying on "don't share this link too publicly" style security through obscurity because nobody wants to do will sign up for anything except SignalApp.
+            </p>
+            <p className="mb-6 text-base tracking-tight">
+              I'm a bay area activiest who's slowly building frustration with cryptopad boiled over into a weekend project, locking down a EU server and a domain registar from Iceland.
+            </p>
+            <p><u><a href="https://www.netcup.de">netcup</a></u>. They aren't some great data sovereign heros, but have stated that without a German court order they have to protect your data under German law. Which is about as good you can get without loads of money or sec-ops expertise.
             </p>
             <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative group">
               <div className="flex justify-between items-center border-b border-dashed border-zinc-300 pb-1 mb-1">
@@ -57,6 +70,16 @@ const App: React.FC = () => {
                 {verificationCommand}
               </code>
             </div>
+            <p className="mb-6 text-base tracking-tight">
+              <b>Please be aware</b>
+              <ul>
+                <li>There is zero identity verification on this site</li>
+                <li>Pages are read/writeable by anyone in unvetted signal groups.</li>
+                <li>This is not "strong security posture" according to <u><a href="https://www.schneierfacts.com">Bruce Schneier</a></u>
+                </li>
+              </ul>
+            </p>
+
             <p className="text-zinc-600 mb-4 font-mono-custom text-sm">
                     // Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
@@ -67,14 +90,14 @@ const App: React.FC = () => {
             <span className="animate-pulse">_</span>
           </div>
         </div>
-      </main>
+      </main >
 
       {/* Footer */}
-      <footer className="mt-12 py-8 border-t border-black border-dashed flex flex-col items-center gap-4 text-[9px] uppercase tracking-widest text-zinc-400">
+      < footer className="mt-12 py-8 border-t border-black border-dashed flex flex-col items-center gap-4 text-[9px] uppercase tracking-widest text-zinc-400" >
         <div>Njal.la Domain | Finish Data Sovereign VPS | Tailscale {'->'} On Prem Server</div>
         <div>&copy; {new Date().getFullYear()} Virgil // unvetted.posting359@passmail.com</div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 };
 export default App;
