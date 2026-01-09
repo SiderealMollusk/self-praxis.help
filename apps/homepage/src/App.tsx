@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const App: React.FC = () => {
+  const [copied, setCopied] = useState(false);
+  const verificationCommand = `d=unvetted.net; ip=$(dig +short "$d" | head -1); echo "IP: $ip"; echo "NS: $(dig +short NS "$d" | tr '\\n' ' ')"; curl -s "https://ipapi.co/$ip/json/"`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(verificationCommand);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col select-none bg-white text-black font-mono-custom">
       {/* Header */}
@@ -34,10 +43,18 @@ const App: React.FC = () => {
             <p className="text-zinc-800 mb-6">
               This web page is an anonymous space for people working to melt &#129482; and liberate &#127817;. This domain is held by a privacy focused domain registrar, and served by a privacy focused VPS provider in the EU.
             </p>
-            <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
-              <div className="text-[9px] uppercase tracking-widest text-zinc-400 mb-1 border-b border-dashed border-zinc-300 pb-1">Third-Party Verification</div>
-              <code className="text-[10px] whitespace-pre select-all text-black font-mono block">
-                d=unvetted.net; ip=$(dig +short "$d" | head -1); echo "IP: $ip"; echo "NS: $(dig +short NS "$d" | tr '\n' ' ')"; curl -s "https://ipapi.co/$ip/json/"
+            <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative group">
+              <div className="flex justify-between items-center border-b border-dashed border-zinc-300 pb-1 mb-1">
+                <div className="text-[9px] uppercase tracking-widest text-zinc-400">Third-Party Verification</div>
+                <button
+                  onClick={handleCopy}
+                  className="text-[9px] uppercase font-bold tracking-widest hover:text-white hover:bg-black px-1 transition-colors"
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+              <code className="text-[10px] whitespace-pre select-all text-black font-mono block overflow-x-auto pb-1">
+                {verificationCommand}
               </code>
             </div>
             <p className="text-zinc-600 mb-4 font-mono-custom text-sm">
