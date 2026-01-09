@@ -32,8 +32,14 @@ const App: React.FC = () => {
               I am Virgil.
             </p>
             <p className="text-zinc-800 mb-6">
-              Do you work to melt &amp#129482; and liberate &amp;#127817;? Do you hate cryptopad on mobile? can't wait for proton sheets fully operational?
+              This web page is an anonymous space for people working to melt &#129482; and liberate &#127817;. This domain is held by a privacy focused domain registrar, and served by a privacy focused VPS provider in the EU.
             </p>
+            <div className="mb-6 bg-zinc-50 border border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
+              <div className="text-[9px] uppercase tracking-widest text-zinc-400 mb-1 border-b border-dashed border-zinc-300 pb-1">Third-Party Verification</div>
+              <code className="text-[10px] whitespace-pre select-all text-black font-mono block">
+                d=unvetted.net; ip=$(dig +short "$d" | head -1); echo "IP: $ip"; echo "NS: $(dig +short NS "$d" | tr '\n' ' ')"; curl -s "https://ipapi.co/$ip/json/"
+              </code>
+            </div>
             <p className="text-zinc-600 mb-4 font-mono-custom text-sm">
                     // Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
