@@ -82,15 +82,11 @@ const App: React.FC = () => {
             <p className="mb-6 text-base tracking-tight">
               <b>Please be aware</b>
               <ul>
-                <li>There is zero identity verification on this site</li>
-                <li>Pages are read/writeable by anyone in unvetted signal groups.</li>
-                <li>This is not "strong security posture" according to <u><a href="https://www.schneierfacts.com">Bruce Schneier</a></u>
-                </li>
+                <li>Don't put anything too sensitive here</li>
+                <li>Don't put anything important, it is not backed up and has auto-delete</li>
+                <li>Do not share this URL with anyone you don't trust</li>
+                <li>I can see all information on this site <u><a href="https://www.schneierfacts.com">Bruce Schneier</a></u></li>
               </ul>
-            </p>
-
-            <p className="text-zinc-600 mb-4 font-mono-custom text-sm">
-                    // Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
 
