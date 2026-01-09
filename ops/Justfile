@@ -78,7 +78,8 @@ _build-and-deploy app:
         docker build -t selfpraxis:{{app}}-\$SHA apps/{{app}} && \
         TAG_VAR=\$(echo {{app}} | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG && \
         export \${TAG_VAR}=\$SHA && \
-        docker compose -f docker/docker-compose.yml up -d {{app}}"
+        docker compose -f docker/docker-compose.yml up -d {{app}} && \
+        sudo chown -R 1000:1000 data/{{app}} 2>/dev/null || true"
 
 # --- VPS Configuration ---
 
