@@ -18,6 +18,12 @@
 - [ ] **Run Express apps as unprivileged user** (Docker non-root)
 - [ ] **Read-Only Containers** (App can't modify its own code)
 
+## Application Security (Shift Signups)
+- [x] **Rate Limiting** (Nginx `api_limit` zone enforced)
+- [x] **Input Validation** (Zod Schema for all writes)
+- [x] **Immutable Logging** (Append-only JSONL storage)
+- [ ] **CSRF Protection** (Pending)
+
 ## Medium Priority
 - [ ] **File integrity monitoring** (detect if files change unexpectedly)
 - [ ] **Port knocking** (hide SSH until you "knock")
