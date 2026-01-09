@@ -18,8 +18,8 @@ const App: React.FC = () => {
           <h1 className="text-6xl font-extrabold uppercase tracking-tighter italic">
             Unvetted.net
           </h1>
-          <div className="text-sm tracking-widest mt-2 uppercase text-zinc-500">
-            Free <span className="grayscale">&#127817;</span> melt <span className="grayscale">&#129482;</span>// Anonymous Virtual Private Server
+          <div className="text-lg tracking-widest mt-2 uppercase text-zinc-500">
+
           </div>
         </div>
         <div className="text-right text-[10px] tracking-widest uppercase flex flex-col gap-1">
@@ -31,14 +31,14 @@ const App: React.FC = () => {
       {/* Content Body as Invoice Items */}
       <main className="flex-grow">
         <div className="border-2 border-black p-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white">
-          <div className="bg-black text-white p-3 flex justify-between text-xs uppercase tracking-widest font-bold">
-            <span>Maintainer: Virgil (Signal App) </span>
-            <span>Doc: #001</span>
+          <div className="p-3 flex justify-between text-xs uppercase tracking-widest font-bold" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 10px, #fff 10px, #fff 20px)' }}>
+            <span className="bg-black text-white px-2 py-0.5 shadow-sm">Maintainer: Virgil (Signal App) </span>
+            <span className="bg-black text-white px-2 py-0.5 shadow-sm">Doc: #001</span>
           </div>
 
           <div className="p-8 leading-relaxed text-lg font-sans">
             <p className="mb-6 font-bold text-3xl uppercase tracking-tight">
-              I am Virgil.
+
             </p>
             <p className="text-zinc-800 mb-6">
               This web page is an anonymous space for people working to. The domain is held by a privacy focused domain registrar, and served by a VPS provider in the EU.
