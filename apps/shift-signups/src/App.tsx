@@ -163,7 +163,7 @@ const App: React.FC = () => {
           <table className="w-full border-collapse font-mono-custom text-sm">
             <tbody>
               {TIME_SLOTS.map((slot) => {
-                const key = `${currentDay.dateStr}_${slot.label}`;
+                const key = `${currentDay.dateStr}-${slot.hour.toString().padStart(2, '0')}`;
                 const isEditing = editingCell === key;
                 const value = shifts[key] || "";
 
